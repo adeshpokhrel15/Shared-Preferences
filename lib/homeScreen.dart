@@ -45,46 +45,59 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.all(20),
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.blue,
-            ),
-            child: TextField(
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          children: [
+            TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: nameController,
+              textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Enter your Name',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                labelText: ' Name',
+                prefixIcon: Icon(
+                  Icons.person,
+                  color: Colors.blue,
+                ),
+                hintText: 'Enter your  Name',
               ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.all(20),
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.blue,
+            SizedBox(
+              height: 20,
             ),
-            child: TextField(
+            TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: addressController,
+              textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
-                border: InputBorder.none,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                labelText: 'Address',
+                prefixIcon: Icon(
+                  Icons.person,
+                  color: Colors.blue,
+                ),
                 hintText: 'Enter your Address',
               ),
             ),
-          ),
-          ElevatedButton(
-              onPressed: () async {
-                final FormModel formModel = FormModel(
-                  name: nameController.text,
-                  address: addressController.text,
-                );
-                await Service().saveData(data: formModel.toJson());
-              },
-              child: Text('Save Data'))
-        ],
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+                onPressed: () async {
+                  final FormModel formModel = FormModel(
+                    name: nameController.text,
+                    address: addressController.text,
+                  );
+                  await Service().saveData(data: formModel.toJson());
+                },
+                child: Text('Save Data'))
+          ],
+        ),
       ),
     ));
   }

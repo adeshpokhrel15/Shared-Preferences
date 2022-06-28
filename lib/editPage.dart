@@ -11,50 +11,62 @@ class EditPage extends StatelessWidget {
     final nameController = TextEditingController(text: formmodel.name);
     final addressController = TextEditingController(text: formmodel.address);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edit Page'),
-      ),
-      body: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.all(20),
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.blue,
-            ),
-            child: TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Enter your Name',
+        appBar: AppBar(
+          title: const Text('Edit Page'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            children: [
+              TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: nameController,
+                textCapitalization: TextCapitalization.words,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  labelText: ' Name',
+                  prefixIcon: Icon(
+                    Icons.person,
+                    color: Colors.blue,
+                  ),
+                  hintText: 'Enter your  Name',
+                ),
               ),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.all(20),
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.blue,
-            ),
-            child: TextField(
-              controller: addressController,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Enter your Address',
+              SizedBox(
+                height: 20,
               ),
-            ),
+              TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: addressController,
+                textCapitalization: TextCapitalization.words,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  labelText: 'Address',
+                  prefixIcon: Icon(
+                    Icons.person,
+                    color: Colors.blue,
+                  ),
+                  hintText: 'Enter your Address',
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                  onPressed: () async {
+                    final FormModel formModel = FormModel(
+                      name: nameController.text,
+                      address: addressController.text,
+                    );
+                    await Service().saveData(data: formModel.toJson());
+                  },
+                  child: Text('Edit Data'))
+            ],
           ),
-          ElevatedButton(
-              onPressed: () async {
-                final FormModel formModel = FormModel(
-                  name: nameController.text,
-                  address: addressController.text,
-                );
-                await Service().saveData(data: formModel.toJson());
-              },
-              child: Text('Save Data'))
-        ],
-      ),
-    );
+        ));
   }
 }

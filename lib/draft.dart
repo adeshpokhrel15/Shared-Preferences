@@ -14,27 +14,38 @@ class Draft extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Draft'),
         ),
-        body: FutureBuilder<FormModel>(
-            future: DataSource().getFormData(),
-            builder: (context, snap) {
-              if (snap.hasData) {
-                return Column(
-                  children: [
-                    Text(snap.data!.name),
-                    Text(snap.data!.address),
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push(CupertinoPageRoute(
-                              builder: (context) => EditPage(
-                                    formmodel: snap.data!,
-                                  )));
-                        },
-                        child: Text("Edit"))
-                  ],
-                );
-              } else {
-                return CircularProgressIndicator();
-              }
-            }));
+        body: Padding(
+          padding: const EdgeInsets.all(22.0),
+          child: FutureBuilder<FormModel>(
+              future: DataSource().getFormData(),
+              builder: (context, snap) {
+                if (snap.hasData) {
+                  return Center(
+                    child: Column(
+                      children: [
+                        Text(snap.data!.name),
+                        SizedBox(
+                          height: 6,
+                        ),
+                        Text(snap.data!.address),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).push(CupertinoPageRoute(
+                                  builder: (context) => EditPage(
+                                        formmodel: snap.data!,
+                                      )));
+                            },
+                            child: Text("Edit"))
+                      ],
+                    ),
+                  );
+                } else {
+                  return CircularProgressIndicator();
+                }
+              }),
+        ));
   }
 }
